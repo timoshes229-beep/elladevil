@@ -1605,11 +1605,6 @@
         <ul class="jo-list" id="jo-pay-list"></ul>
         <p class="jo-note" id="jo-pay-note"></p>
       </div>
-      <div class="jo-card jo-card-cart jo-rv">
-        <div class="jo-card-h"><span class="jo-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14l-1.2 11.2a2 2 0 01-2 1.8H8.2a2 2 0 01-2-1.8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg></span><b id="jo-cart-title"></b></div>
-        <p class="jo-cart-txt" id="jo-cart-txt"></p>
-        <button class="jo-btn" id="jo-cart-open" type="button"><span id="jo-cart-btn-text"></span><i id="jo-cart-btn-count">0</i></button>
-      </div>
     </div>
   </div>
 </section>
@@ -1617,8 +1612,13 @@
 <!-- КОШИК (кнопка і панель) -->
 <div class="jo-cart-ui" id="jo-cart-ui">
   <button class="jo-fab" id="jo-fab" type="button" aria-label="Корзина">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 8h14l-1.2 11.2a2 2 0 01-2 1.8H8.2a2 2 0 01-2-1.8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
-    <i id="jo-fab-count">0</i>
+    <span class="jo-fab-label"><small id="jo-fab-small"></small><b id="jo-fab-sum"></b></span>
+    <span class="jo-fab-core">
+      <span class="jo-fab-shine"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 8h14l-1.2 11.2a2 2 0 01-2 1.8H8.2a2 2 0 01-2-1.8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+      <i id="jo-fab-count">0</i>
+    </span>
+    <span class="jo-fab-ring" id="jo-fab-ring"></span>
   </button>
   <div class="jo-shade" id="jo-shade"></div>
   <aside class="jo-drawer" id="jo-drawer" aria-hidden="true">
@@ -1705,7 +1705,7 @@
   .jo-ch:hover .jo-ch-go{background:var(--jo-text); color:var(--jo-dark)}
 
   /* картки інфо */
-  .jo-info{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px}
+  .jo-info{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px}
   .jo-info .jo-card:nth-child(2){transition-delay:.12s} .jo-info .jo-card:nth-child(3){transition-delay:.24s}
   .jo-card{padding:30px; border-radius:24px; border:1px solid var(--jo-border); background:var(--jo-card)}
   .jo-card-h{display:flex; align-items:center; gap:14px; margin-bottom:20px}
@@ -1719,8 +1719,6 @@
   .jo-list li{position:relative; padding-left:22px; font-size:14px; line-height:1.5; color:var(--jo-muted)}
   .jo-list li::before{content:""; position:absolute; left:0; top:7px; width:8px; height:8px; border-radius:50%; border:1.5px solid var(--jo-gold)}
   .jo-note{margin-top:16px; font-size:12px; line-height:1.6; color:var(--jo-muted); opacity:.8}
-  .jo-card-cart{background:linear-gradient(160deg,rgba(214,185,140,.14),rgba(214,185,140,.03)); border-color:rgba(214,185,140,.3)}
-  .jo-cart-txt{font-size:14px; line-height:1.6; color:var(--jo-muted)}
   .jo-btn{margin-top:22px; display:inline-flex; align-items:center; gap:12px; padding:16px 18px 16px 26px; border:0; border-radius:100px; cursor:pointer; font-family:inherit;
     background:var(--jo-btn-bg); color:var(--jo-btn-text)!important; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; transition:background .35s,transform .35s}
   .jo-btn:hover{background:var(--jo-btn-hover); transform:translateY(-2px)}
@@ -1729,14 +1727,38 @@
   /* ===== КОШИК ===== */
   .jo-cart-ui{font-family:'Manrope',Arial,sans-serif; -webkit-font-smoothing:antialiased}
   .jo-cart-ui *{box-sizing:border-box; margin:0; padding:0}
-  .jo-fab{position:fixed; z-index:9990; right:24px; bottom:24px; width:64px; height:64px; border-radius:50%; border:0; cursor:pointer; display:flex; align-items:center; justify-content:center;
-    background:var(--jo-dark,#2a1f1b); color:#f6efe7; box-shadow:0 14px 34px rgba(42,31,27,.35); transform:scale(0); transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
-  .jo-fab.jo-show{transform:scale(1)}
-  .jo-fab.jo-bump{animation:jo-bump .5s}
-  @keyframes jo-bump{30%{transform:scale(1.18)}60%{transform:scale(.94)}}
-  .jo-fab svg{width:26px; height:26px}
-  .jo-fab i{position:absolute; top:-2px; right:-2px; min-width:24px; height:24px; padding:0 6px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-    background:var(--jo-btn-bg,#6b2228); color:#fff; font-style:normal; font-size:12px; font-weight:600; box-shadow:0 0 0 3px #f6f1ea}
+  .jo-fab{position:fixed; z-index:9990; right:24px; bottom:24px; height:64px; padding:0; border:0; cursor:pointer; display:flex; align-items:center; flex-direction:row;
+    border-radius:100px; background:rgba(42,31,27,.9); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); color:#f6efe7;
+    box-shadow:0 18px 40px rgba(20,14,12,.35),0 0 0 1px rgba(214,185,140,.35);
+    transform:translateY(120px) scale(.6); opacity:0; transition:transform .7s cubic-bezier(.3,1.5,.5,1),opacity .4s,box-shadow .4s}
+  .jo-fab.jo-show{transform:none; opacity:1}
+  .jo-fab:hover{box-shadow:0 22px 50px rgba(20,14,12,.45),0 0 0 1px rgba(214,185,140,.8),0 0 30px rgba(214,185,140,.35)}
+  .jo-fab-label{display:flex; flex-direction:column; align-items:flex-end; overflow:hidden; max-width:0; padding:0; white-space:nowrap; line-height:1.15;
+    transition:max-width .6s cubic-bezier(.3,1.2,.5,1),padding .6s}
+  .jo-fab.jo-has .jo-fab-label,.jo-fab:hover .jo-fab-label{max-width:170px; padding:0 14px 0 22px}
+  .jo-fab-label small{font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:rgba(246,239,231,.6)}
+  .jo-fab-label b{font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:#f6efe7}
+  .jo-fab-core{position:relative; width:64px; height:64px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; overflow:visible;
+    background:linear-gradient(135deg,#f3dcb0 0%,#d6b98c 40%,#a8824f 100%); color:#2a1f1b; box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -6px 12px rgba(120,80,30,.25)}
+  .jo-fab-core svg{position:relative; width:26px; height:26px; transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+  .jo-fab:hover .jo-fab-core svg{transform:rotate(-10deg) scale(1.08)}
+  .jo-fab-shine{position:absolute; inset:0; border-radius:50%; overflow:hidden}
+  .jo-fab-shine::after{content:""; position:absolute; top:-20%; bottom:-20%; width:40%; left:-60%; background:linear-gradient(105deg,transparent,rgba(255,255,255,.75),transparent); transform:skewX(-18deg); animation:jo-shine 4.5s 2s infinite}
+  @keyframes jo-shine{0%{left:-60%}18%,100%{left:130%}}
+  .jo-fab-core i{position:absolute; top:-4px; right:-4px; min-width:24px; height:24px; padding:0 6px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    background:var(--jo-btn-bg,#6b2228); color:#fff; font-style:normal; font-size:12px; font-weight:600; box-shadow:0 0 0 3px rgba(42,31,27,.9); transform:scale(0); transition:transform .4s cubic-bezier(.3,1.8,.5,1)}
+  .jo-fab.jo-has .jo-fab-core i{transform:scale(1)}
+  .jo-fab-core i.jo-tick{animation:jo-tick .5s}
+  @keyframes jo-tick{0%{transform:scale(1)}35%{transform:scale(1.5) rotate(-12deg)}100%{transform:scale(1)}}
+  .jo-fab-ring{position:absolute; right:0; top:0; width:64px; height:64px; border-radius:50%; border:2px solid #d6b98c; opacity:0; pointer-events:none}
+  .jo-fab.jo-bump .jo-fab-ring{animation:jo-ring .9s ease-out}
+  @keyframes jo-ring{0%{opacity:.9; transform:scale(1)}100%{opacity:0; transform:scale(2.2)}}
+  .jo-fab.jo-bump .jo-fab-core{animation:jo-bump .55s}
+  @keyframes jo-bump{30%{transform:scale(1.2) rotate(-8deg)}60%{transform:scale(.92) rotate(4deg)}}
+  .jo-fab.jo-has:not(:hover) .jo-fab-core svg{animation:jo-wiggle 9s 3s infinite}
+  @keyframes jo-wiggle{0%,92%,100%{transform:none}94%{transform:rotate(-14deg)}96%{transform:rotate(12deg)}98%{transform:rotate(-6deg)}}
+  .jo-spark{position:fixed; z-index:9991; width:7px; height:7px; margin:-3.5px 0 0 -3.5px; border-radius:50%; pointer-events:none; animation:jo-spark .8s cubic-bezier(.2,.8,.3,1) forwards}
+  @keyframes jo-spark{0%{opacity:1; transform:translate(0,0) scale(1)}100%{opacity:0; transform:translate(var(--sx),var(--sy)) scale(.2)}}
   .jo-shade{position:fixed; inset:0; z-index:9991; background:rgba(20,14,12,.45); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity .4s}
   .jo-drawer{position:fixed; z-index:9992; top:0; right:0; bottom:0; width:min(440px,100vw); display:flex; flex-direction:column; background:var(--jo-light,#f6f1ea); color:var(--jo-dark,#2a1f1b);
     transform:translateX(105%); transition:transform .55s cubic-bezier(.7,0,.2,1),box-shadow .55s,visibility 0s .55s; visibility:hidden}
@@ -1805,7 +1827,11 @@
     .jo-ch-txt b{font-size:26px}
     .jo-ch-go{width:44px; height:44px}
     .jo-card{padding:24px}
-    .jo-fab{right:16px; bottom:16px; width:58px; height:58px}
+    .jo-fab{right:14px; bottom:14px; height:58px}
+    .jo-fab-core,.jo-fab-ring{width:58px; height:58px}
+    .jo-fab.jo-has .jo-fab-label{padding:0 12px 0 18px}
+    .jo-toast{bottom:auto; top:16px; transform:translate(-50%,-160%)}
+    .jo-toast.jo-show{transform:translate(-50%,0)}
   }
   @media (prefers-reduced-motion:reduce){
     .jo *,.jo-cart-ui *{transition-duration:.01s!important; animation:none!important}
@@ -1864,9 +1890,7 @@
     paymentNote: "Реквизиты для оплаты пришлём в сообщении после подтверждения заказа.", /* ЗМІНИТИ */
 
     /* ---------- КОШИК ---------- */
-    cartCardTitle: "Корзина",                   /* ЗМІНИТИ: заголовок картки кошика в блоці */
-    cartCardText: "Собери всё, что понравилось, а потом оформи одним сообщением.", /* ЗМІНИТИ */
-    cartButton: "Открыть корзину",              /* ЗМІНИТИ: кнопка в картці */
+    fabLabel: "Корзина",                        /* ЗМІНИТИ: напис на плаваючій кнопці кошика */
     drawerTitle: "Корзина",                     /* ЗМІНИТИ: заголовок панелі кошика */
     totalLabel: "Итого",                        /* ЗМІНИТИ */
     orderIg: "Оформить в Instagram",            /* ЗМІНИТИ: кнопка оформлення через Instagram */
@@ -1959,7 +1983,6 @@
   $('jo-pay-title').textContent = CONFIG.paymentTitle;
   CONFIG.payment.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; $('jo-pay-list').appendChild(li); });
   $('jo-pay-note').textContent = CONFIG.paymentNote;
-  $('jo-cart-title').textContent = CONFIG.cartCardTitle; $('jo-cart-txt').textContent = CONFIG.cartCardText; $('jo-cart-btn-text').textContent = CONFIG.cartButton;
 
   /* поява і лінія шляху при прокрутці */
   var rvs = root.querySelectorAll('.jo-path ~ .jo-rv, .jo-info .jo-rv');
@@ -2011,8 +2034,8 @@
   if(!IG_LINK) $('jo-dr-ig').style.display = 'none';
 
   function render(){
-    var n = count(); $('jo-fab-count').textContent = n; $('jo-cart-btn-count').textContent = n;
-    $('jo-fab').classList.toggle('jo-show', n > 0 || ui.classList.contains('jo-open'));
+    var n = count(); $('jo-fab-count').textContent = n;
+    $('jo-fab-sum').textContent = money(total()); $('jo-fab').classList.toggle('jo-has', n > 0);
     var list = $('jo-dr-list'); list.innerHTML = '';
     if(!cart.length){
       list.innerHTML = '<div class="jo-empty">' + BAG + '<div></div><a></a></div>';
@@ -2039,7 +2062,7 @@
   }
   function open(){ ui.classList.add('jo-open'); $('jo-drawer').setAttribute('aria-hidden', 'false'); document.documentElement.style.overflow = 'hidden'; render(); }
   function close(){ ui.classList.remove('jo-open'); $('jo-drawer').setAttribute('aria-hidden', 'true'); document.documentElement.style.overflow = ''; render(); }
-  $('jo-fab').addEventListener('click', open); $('jo-cart-open').addEventListener('click', open);
+  $('jo-fab').addEventListener('click', open);
   $('jo-dr-x').addEventListener('click', close); $('jo-shade').addEventListener('click', close);
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && ui.classList.contains('jo-open')) close(); });
 
@@ -2049,7 +2072,7 @@
   /* політ товару в кошик */
   function fly(fromEl, img){
     var fab = $('jo-fab'); if(!fromEl) return;
-    var r = fromEl.getBoundingClientRect(), f = fab.getBoundingClientRect();
+    var r = fromEl.getBoundingClientRect(), f = fab.querySelector('.jo-fab-core').getBoundingClientRect();
     var size = Math.min(r.width, r.height, 140);
     var el = document.createElement('div'); el.className = 'jo-fly';
     el.innerHTML = img ? '<img alt="">' : BAG; if(img) el.querySelector('img').src = img; else el.classList.add('jo-fly-ph');
@@ -2060,7 +2083,22 @@
       var fx = f.width ? f.left + f.width / 2 : window.innerWidth - 56, fy = f.height ? f.top + f.height / 2 : window.innerHeight - 56;
       el.style.left = (fx - 14) + 'px'; el.style.top = (fy - 14) + 'px'; el.style.width = '28px'; el.style.height = '28px'; el.style.opacity = '0';
     }); });
-    setTimeout(function(){ el.remove(); fab.classList.remove('jo-bump'); void fab.offsetWidth; fab.classList.add('jo-bump'); }, 820);
+    setTimeout(function(){ el.remove(); celebrate(); }, 820);
+  }
+
+  /* святкування: кнопка підстрибує, кільце і золоті іскри */
+  function celebrate(){
+    var fab = $('jo-fab'), badge = $('jo-fab-count');
+    fab.classList.remove('jo-bump'); badge.classList.remove('jo-tick'); void fab.offsetWidth; fab.classList.add('jo-bump'); badge.classList.add('jo-tick');
+    var r = fab.querySelector('.jo-fab-core').getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    var cols = ['#f3dcb0', '#d6b98c', '#e3a7a0', '#ffffff', '#6b2228'];
+    for(var i = 0; i < 14; i++){
+      var s = document.createElement('span'); s.className = 'jo-spark';
+      var a = Math.PI * 2 * i / 14 + Math.random() * .4, d = 38 + Math.random() * 30;
+      s.style.left = cx + 'px'; s.style.top = cy + 'px'; s.style.background = cols[i % cols.length];
+      s.style.setProperty('--sx', Math.cos(a) * d + 'px'); s.style.setProperty('--sy', Math.sin(a) * d + 'px');
+      document.body.appendChild(s); (function(el){ setTimeout(function(){ el.remove(); }, 900); })(s);
+    }
   }
 
   /* API для каталогу: window.EDCart.add({...}, елемент) */
@@ -2069,7 +2107,7 @@
       var price = typeof p.price === 'number' ? p.price : parseFloat(String(p.price).replace(/\s/g, '').replace(',', '.').replace(/[^0-9.]/g, '')) || 0;
       var id = p.id || p.name, ex = cart.filter(function(x){ return x.id === id; })[0];
       if(ex) ex.qty++; else cart.push({ id: id, name: p.name, price: price, img: p.img || '', qty: 1 });
-      save(); $('jo-fab').classList.add('jo-show'); render(); fly(fromEl, p.img); toast(CONFIG.addedToast);
+      save(); render(); if(fromEl) fly(fromEl, p.img); else celebrate(); toast(CONFIG.addedToast);
     },
     open: open, count: count
   };
@@ -2095,7 +2133,9 @@
   $('jo-dr-ig').addEventListener('click', function(){ checkout(IG_LINK, false); });
   $('jo-dr-tg').addEventListener('click', function(){ if(!TG_LINK){ toast(CONFIG.tgMissing); return; } checkout(TG_LINK, true); });
 
+  $('jo-fab-small').textContent = CONFIG.fabLabel;
   render();
+  setTimeout(function(){ $('jo-fab').classList.add('jo-show'); }, 900);
 })();
 </script>
 
