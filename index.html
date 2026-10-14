@@ -895,14 +895,14 @@
     /* ---------- ТОВАРИ ---------- */
     /* category - одна з категорій фільтрів: earrings, cuffs, rings, chains
        img      - головне фото (посилання). "" = красива заглушка
-       img2     - друге фото, на моделі. З'являється при наведенні. "" = заглушка
+       img2     - друге фото, на моделі. З'являється при наведенні. "" = без другого фото (якщо є img)
        badge    - мітка в кутку ("Хит", "New"). "" = без мітки
        oldPrice - стара ціна (закреслена). "" = не показувати
        link     - куди веде клік по фото (і кнопка, якщо на сторінці немає блоку з кошиком)
        Кнопка з сумочкою додає товар у кошик (кошик - у блоці 5 "Как заказать"). */
     products: [                                 /* ЗМІНИТИ: список товарів (можна додавати і видаляти) */
+      { name: "Velvet",        category: "earrings", price: "30 €",      oldPrice: "",         badge: "New", img: "https://timoshes229-beep.github.io/elladevil/images/products/velvet.jpg", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Кафф Aurora",   category: "cuffs",    price: "39 €",      oldPrice: "",         badge: "Хит", img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
-      { name: "Пусеты Stella", category: "earrings", price: "24 €",      oldPrice: "",         badge: "",    img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Кольцо Linea",  category: "rings",    price: "32 €",      oldPrice: "40 €",     badge: "-20%",img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Цепь Vela",     category: "chains",   price: "49 €",      oldPrice: "",         badge: "New", img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Серьги Luna",   category: "earrings", price: "36 €",      oldPrice: "",         badge: "",    img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
@@ -984,7 +984,7 @@
     var card = el('article', 'jc-card'); card.setAttribute('data-cat', p.category);
     var a = el('a', 'jc-media'); a.href = p.link || '#'; if(/^https?:/.test(p.link)){ a.target = '_blank'; a.rel = 'noopener'; }
     a.innerHTML = '<div class="jc-img jc-img1">' + media(p.img, CONFIG.placeholderText, p.category) + '</div>' +
-                  '<div class="jc-img jc-img2">' + media(p.img2, CONFIG.placeholder2Text, p.category) + '</div>' +
+                  ((p.img2 || !p.img) ? '<div class="jc-img jc-img2">' + media(p.img2, CONFIG.placeholder2Text, p.category) + '</div>' : '') +
                   '<span class="jc-shine"></span>' + (p.badge ? '<span class="jc-badge"></span>' : '');
     if(p.badge) a.querySelector('.jc-badge').textContent = p.badge;
     var like = el('button', 'jc-like', HEART + '<i></i><i></i><i></i><i></i><i></i><i></i>'); like.type = 'button'; like.setAttribute('aria-label', 'Нравится');
