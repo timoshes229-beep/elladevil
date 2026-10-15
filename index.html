@@ -738,12 +738,12 @@
   .jc-line>span{display:inline-block; transform:translateY(105%); transition:transform 1.2s cubic-bezier(.2,.75,.15,1)}
   .jc-line:nth-child(2)>span{transition-delay:.12s}
   .jc.jc-seen .jc-line>span{transform:none}
-  .jc-head-right{max-width:460px; min-width:0}
+  .jc-head-right{max-width:500px; min-width:0}
   .jc-sub{font-size:15px; line-height:1.7; color:var(--jc-muted)}
 
   /* фильтры */
   .jc-filters{position:relative; display:inline-flex; gap:4px; margin-top:26px; padding:5px; border-radius:100px; border:1px solid var(--jc-line-color); background:rgba(255,255,255,.35)}
-  .jc-filters button{position:relative; z-index:1; border:0; background:none; cursor:pointer; padding:10px 18px; border-radius:100px; font-family:inherit; font-size:12px; font-weight:500; letter-spacing:.06em; color:var(--jc-text)!important; white-space:nowrap; transition:color .4s}
+  .jc-filters button{position:relative; z-index:1; border:0; background:none; cursor:pointer; padding:10px 15px; border-radius:100px; font-family:inherit; font-size:12px; font-weight:500; letter-spacing:.06em; color:var(--jc-text)!important; white-space:nowrap; transition:color .4s}
   .jc-filters button.jc-on{color:var(--jc-btn-text)!important}
   .jc-pill{position:absolute; z-index:0; top:5px; bottom:5px; left:5px; width:60px; border-radius:100px; background:var(--jc-text); transition:left .5s cubic-bezier(.6,0,.2,1),width .5s cubic-bezier(.6,0,.2,1)}
 
@@ -889,11 +889,12 @@
       ["Серьги",  "earrings"],
       ["Каффы",   "cuffs"],
       ["Кольца",  "rings"],
-      ["Цепочки", "chains"]
+      ["Цепочки", "chains"],
+      ["Наборы",  "sets"]
     ],
 
     /* ---------- ТОВАРИ ---------- */
-    /* category - одна з категорій фільтрів: earrings, cuffs, rings, chains
+    /* category - одна з категорій фільтрів: earrings, cuffs, rings, chains, sets
        img      - головне фото (посилання). "" = красива заглушка
        img2     - друге фото, на моделі. З'являється при наведенні. "" = без другого фото (якщо є img)
        badge    - мітка в кутку ("Хит", "New"). "" = без мітки
@@ -902,12 +903,12 @@
        Кнопка з сумочкою додає товар у кошик (кошик - у блоці 5 "Как заказать"). */
     products: [                                 /* ЗМІНИТИ: список товарів (можна додавати і видаляти) */
       { name: "Velvet",        category: "earrings", price: "30 €",      oldPrice: "",         badge: "New", img: "https://timoshes229-beep.github.io/elladevil/images/products/velvet.jpg", img2: "https://timoshes229-beep.github.io/elladevil/images/products/velvet-model.jpg", link: "https://www.instagram.com/elladevil__" },
+      { name: "Pearl Heart",   category: "sets",     price: "45 €",      oldPrice: "",         badge: "New", img: "https://timoshes229-beep.github.io/elladevil/images/products/pearl-heart.jpg", img2: "https://timoshes229-beep.github.io/elladevil/images/products/pearl-heart-model.jpg", link: "https://www.instagram.com/elladevil__" },
       { name: "Кафф Aurora",   category: "cuffs",    price: "39 €",      oldPrice: "",         badge: "Хит", img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Кольцо Linea",  category: "rings",    price: "32 €",      oldPrice: "40 €",     badge: "-20%",img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Цепь Vela",     category: "chains",   price: "49 €",      oldPrice: "",         badge: "New", img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Серьги Luna",   category: "earrings", price: "36 €",      oldPrice: "",         badge: "",    img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Кафф Orbit",    category: "cuffs",    price: "29 €",      oldPrice: "",         badge: "",    img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
-      { name: "Кольцо Duo",    category: "rings",    price: "34 €",      oldPrice: "",         badge: "Хит", img: "", img2: "", link: "https://www.instagram.com/elladevil__" },
       { name: "Чокер Nera",    category: "chains",   price: "55 €",      oldPrice: "",         badge: "",    img: "", img2: "", link: "https://www.instagram.com/elladevil__" }
     ],
 
