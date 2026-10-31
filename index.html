@@ -140,7 +140,6 @@
   html.ed-devil .jc-filters button.jc-on{color:#1b1311!important}
   html.ed-devil .jc-ph{background:radial-gradient(circle at 50% 40%,rgba(214,185,140,.14),transparent 60%),var(--jc-ph1)}
   html.ed-devil .jc-ph svg{stroke:#d6b98c}
-  html.ed-devil .jc-cursor{background:#d6b98c; color:#1b1311}
   html.ed-devil .jp{--jp-outer:#1b1311!important}
   html.ed-devil .ji{--ji-bg:#140d0c!important; --ji-bg2:#1b1311!important; --ji-text:#f3ece4!important; --ji-muted:rgba(243,236,228,.6)!important; --ji-accent:#e0707a!important; --ji-tile:#2a1f1b!important}
   html.ed-devil .ji-ph{background:radial-gradient(circle at 50% 35%,rgba(214,185,140,.12),transparent 60%),var(--ji-tile)}
@@ -744,7 +743,6 @@
     </a>
   </div>
 
-  <div class="jc-cursor" id="jc-cursor"><span id="jc-cursor-text"></span></div>
 
   <!-- ВІКНО ТОВАРУ -->
   <div class="jm" id="jm" hidden>
@@ -849,16 +847,6 @@
   .jc-img2 .jc-ph svg *{stroke-dashoffset:0}
   .jc-img2 .jc-ph small{color:rgba(246,239,231,.75)}
 
-  /* блик как от металла */
-  .jc-shine{position:absolute; inset:0; z-index:4; pointer-events:none; opacity:0; transition:opacity .6s;
-    background:linear-gradient(115deg,transparent calc(var(--mx,50%) - 26%),rgba(255,248,232,.16) calc(var(--mx,50%) - 9%),rgba(255,252,244,.62) var(--mx,50%),rgba(255,248,232,.16) calc(var(--mx,50%) + 9%),transparent calc(var(--mx,50%) + 26%));
-    mix-blend-mode:overlay}
-  .jc-shine::after{content:""; position:absolute; inset:0; background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,246,226,.38),transparent 28%); mix-blend-mode:soft-light}
-  .jc-card:hover .jc-shine{opacity:1}
-  .jc-media::before{content:""; position:absolute; z-index:5; top:0; bottom:0; width:30%; left:-50%; pointer-events:none;
-    background:linear-gradient(105deg,transparent,rgba(255,250,238,.32),transparent); transform:skewX(-18deg)}
-  .jc-card:hover .jc-media::before{left:130%; transition:left 1.4s cubic-bezier(.3,0,.2,1)}
-
   .jc-badge{position:absolute; z-index:5; left:16px; top:14px; padding:5px 12px 6px; border-radius:100px; background:rgba(246,241,234,.92); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; line-height:1; color:var(--jc-accent)}
   .jc-like{position:absolute; z-index:5; right:12px; top:12px; width:38px; height:38px; border-radius:50%; border:0; cursor:pointer; display:flex; align-items:center; justify-content:center;
     background:rgba(246,241,234,.9); color:var(--jc-text); transition:transform .3s}
@@ -899,12 +887,6 @@
   .jc-btn-ico svg{width:18px; height:18px}
   .jc-btn:hover .jc-btn-ico{transform:rotate(-45deg)}
 
-  /* круглый курсор "Смотреть" */
-  .jc-cursor{position:fixed; z-index:50; left:0; top:0; width:96px; height:96px; margin:-48px 0 0 -48px; border-radius:50%; pointer-events:none;
-    display:flex; align-items:center; justify-content:center; background:var(--jc-text); color:var(--jc-bg2);
-    font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; transform:scale(0); transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-  .jc-cursor.jc-show{transform:scale(1)}
-
   @media (max-width:1100px){
     .jc-grid{gap:56px 26px}
     .jc-card:nth-child(3n+2){margin-top:56px}
@@ -930,7 +912,6 @@
     .jc-order{width:100%; height:40px; border-radius:100px; gap:8px; font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase}
     .jc-order::before{content:attr(data-text)}
     .jc-more{margin-top:50px}
-    .jc-cursor{display:none}
   }
   /* зміна заголовка при перемиканні Angel / Devil */
   .jc.jc-swap .jc-line>span{transform:translateY(105%)!important; transition-duration:.45s!important; transition-delay:0s!important}
@@ -1079,7 +1060,6 @@
 
     /* ---------- ТЕКСТИ КНОПОК ---------- */
     orderText: "В корзину",                     /* ЗМІНИТИ: текст кнопки "в кошик" на телефоні */
-    cursorText: "Смотреть",                     /* ЗМІНИТИ: текст у круглому курсорі над фото (комп'ютер) */
     placeholderText: "Фото скоро",              /* ЗМІНИТИ: напис на заглушці замість фото */
     placeholder2Text: "На модели",              /* ЗМІНИТИ: напис на заглушці другого фото */
     buttonText: "Смотреть весь каталог",        /* ЗМІНИТИ: текст великої кнопки внизу. "" = сховати */
@@ -1132,7 +1112,6 @@
   fillTitle($('jc-t2'), CONFIG.titleLine2);
   $('jc-sub').textContent = CONFIG.subtitle;
   if(CONFIG.buttonText){ $('jc-btn').href = CONFIG.buttonLink; $('jc-btn-text').textContent = CONFIG.buttonText; } else { root.querySelector('.jc-more').style.display = 'none'; }
-  $('jc-cursor-text').textContent = CONFIG.cursorText;
 
   /* малюнки-заглушки для кожної категорії */
   var ICONS = {
@@ -1156,7 +1135,7 @@
     var a = el('a', 'jc-media'); a.href = p.link || '#'; if(/^https?:/.test(p.link)){ a.target = '_blank'; a.rel = 'noopener'; }
     a.innerHTML = '<div class="jc-img jc-img1">' + media(p.img, CONFIG.placeholderText, p.category) + '</div>' +
                   ((p.img2 || !p.img) ? '<div class="jc-img jc-img2">' + media(p.img2, CONFIG.placeholder2Text, p.category) + '</div>' : '') +
-                  '<span class="jc-shine"></span>' + (p.badge ? '<span class="jc-badge"></span>' : '');
+                  (p.badge ? '<span class="jc-badge"></span>' : '');
     if(p.badge) a.querySelector('.jc-badge').textContent = p.badge;
     var like = el('button', 'jc-like', HEART + '<i></i><i></i><i></i><i></i><i></i><i></i>'); like.type = 'button'; like.setAttribute('aria-label', 'Нравится');
     a.appendChild(like);
@@ -1243,7 +1222,7 @@
   }, {passive: true});
   function openModal(card){
     jmLast = document.activeElement; fillModal(card);
-    jm.hidden = false; document.documentElement.style.overflow = 'hidden'; cur.classList.remove('jc-show');
+    jm.hidden = false; document.documentElement.style.overflow = 'hidden';
     requestAnimationFrame(function(){ requestAnimationFrame(function(){ jm.classList.add('jm-open'); jm.querySelector('.jm-x').focus({preventScroll: true}); }); });
   }
   function closeModal(){
@@ -1368,16 +1347,6 @@
   function initPill(){ var on = fWrap.querySelector('.jc-on'); if(on) movePill(on); }
   initPill(); window.addEventListener('resize', initPill);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(initPill);
-
-  /* круглий курсор "Смотреть" */
-  var cur = $('jc-cursor');
-  if(!isTouch){
-    var tx = 0, ty = 0, cx = 0, cy = 0;
-    document.addEventListener('mousemove', function(e){ tx = e.clientX; ty = e.clientY; });
-    (function loop(){ cx += (tx - cx) * .18; cy += (ty - cy) * .18; cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(loop); })();
-    root.addEventListener('mouseover', function(e){ var m = e.target.closest && e.target.closest('.jc-media'); cur.classList.toggle('jc-show', !!m && !(e.target.closest('.jc-like'))); });
-    root.addEventListener('mouseleave', function(){ cur.classList.remove('jc-show'); });
-  }
 
   /* на телефоні друге фото показується саме по черзі */
   if(isTouch){
