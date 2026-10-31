@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236b2228'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-style='italic' font-size='18' fill='%23f6efe7' text-anchor='middle'%3Ee%3C/text%3E%3C/svg%3E">
 <link rel="preload" as="image" href="images/photo.webp">
-<style>html,body{margin:0;padding:0;background:#ebe4d9}</style>
+<style>html,body{margin:0;padding:0;background:#ebe4d9}[hidden]{display:none!important}</style>
 </head>
 <body>
 <a class="ed-skip" href="#catalog">Перейти к каталогу</a>
@@ -266,13 +266,14 @@
   /* ---------- золота нитка прокрутки ---------- */
   var thread = $('jx-thread'), fill = $('jx-thread-fill'), dots = [];
   if(CONFIG.thread){
-    CONFIG.threadPoints.forEach(function(pt){
+    function buildDots(){ CONFIG.threadPoints.forEach(function(pt){
       var target = pt[1] ? document.getElementById(pt[1]) : null; if(pt[1] && !target) return;
       var b = document.createElement('button'); b.type = 'button'; b.className = 'jx-dot'; b.setAttribute('aria-label', pt[0]);
       b.innerHTML = '<span></span>'; b.firstChild.textContent = pt[0];
       b.addEventListener('click', function(){ var y = target ? target.getBoundingClientRect().top + scrollY : 0; scrollTo({top: y, behavior: 'smooth'}); });
       thread.appendChild(b); dots.push({el: b, target: target});
-    });
+    }); }
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ buildDots(); onScroll(); }); else buildDots();
     var ticking = false;
     function topOf(t){ return t ? t.getBoundingClientRect().top + scrollY : 0; }
     function update(){
@@ -2794,7 +2795,7 @@
 
     /* ---------- КАНАЛИ ЗВ'ЯЗКУ ---------- */
     instagramUser: "elladevil__",               /* ЗМІНИТИ: нік в Instagram (без @) */
-    telegramUser: "",                           /* ЗМІНИТИ: нік в Telegram (без @). Поки порожньо - кнопки Telegram показують підказку */
+    telegramUser: "",                           /* ЗМІНИТИ: нік в Telegram (без @). Поки порожньо - кнопки Telegram сховані */
     tgMissing: "Telegram скоро появится",       /* ЗМІНИТИ: напис, поки нік Telegram не вказаний */
     igSmall: "Instagram",                       /* ЗМІНИТИ: маленький напис на картці Instagram */
     igTitle: "Написать в Direct",               /* ЗМІНИТИ: великий напис на картці Instagram */
@@ -2901,8 +2902,8 @@
   $('jo-ch-ig').href = IG_LINK || '#'; $('jo-ig-small').textContent = CONFIG.igSmall; $('jo-ig-title').textContent = CONFIG.igTitle; $('jo-ig-handle').textContent = '@' + CONFIG.instagramUser;
   if(!IG_LINK) $('jo-ch-ig').style.display = 'none';
   $('jo-ch-tg').href = TG_LINK || '#'; $('jo-tg-small').textContent = CONFIG.tgSmall; $('jo-tg-title').textContent = CONFIG.tgTitle; $('jo-tg-handle').textContent = '@' + CONFIG.telegramUser;
-  if(!TG_LINK){ $('jo-tg-handle').textContent = CONFIG.tgMissing;
-    $('jo-ch-tg').addEventListener('click', function(e){ e.preventDefault(); toast(CONFIG.tgMissing); }); }
+  /* поки нік Telegram не вказаний - кнопок Telegram не видно, Instagram займає всю ширину */
+  if(!TG_LINK){ $('jo-ch-tg').style.display = 'none'; $('jo-dr-tg').style.display = 'none'; $('jo-channels').style.gridTemplateColumns = 'minmax(0,1fr)'; }
   if(!isTouch) [$('jo-ch-ig'), $('jo-ch-tg')].forEach(function(a){
     var go = a.querySelector('.jo-ch-go');
     a.addEventListener('mousemove', function(e){ var r = a.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
